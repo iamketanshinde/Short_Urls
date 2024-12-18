@@ -5,7 +5,7 @@ const urlroute = require('./routes/url')
 const {ConnectToMongoDb}= require('./connections')
 const URL = require('./models/urls')
 
-ConnectToMongoDb('mongodb://localhost:27017/Url_Generator')
+ConnectToMongoDb('mongodb://localhost:27017/Url-Generate')
 .then(()=>console.log("MongoDb Connected!!!"))
 
 
