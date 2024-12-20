@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = 4001;
+const path = require('path');
 const urlroute = require('./routes/url')
 const {ConnectToMongoDb}= require('./connections')
 const URL = require('./models/urls')
@@ -10,23 +11,18 @@ ConnectToMongoDb('mongodb://localhost:27017/Url-Generate')
 
 app.set("view engine","ejs")
 
+app.set("views",path.resolve("./views"))
+
 app.use(express.json());
 
 app.use('/url',urlroute);
 
-app.get('/test',async(req,res)=>{
+app.get('/test', async(req,res)=>{
     const allurls = await URL.find({})
-    return res.end(`
-        <html>
-            <head></head>
-            <body>
-                <ol>
-                    ${allurls.map(url=>`<li>${url.shortId} -${url.redirectURL} -${url.visitHistory.length}</li>`).join('')}
-                </ol>
-            </body>
-        </html>
-        `)
-})
+    return res.render("home",{
+        urls:allurls,
+    });
+});
 
 app.get('/url/:shortId', async(req, res)=>{
     const shortId = req.params.shortId;
