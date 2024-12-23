@@ -3,19 +3,22 @@ const app = express();
 const PORT = 4001;
 const path = require('path');
 const urlroute = require('./routes/url')
+const staticrout = require('./routes/stsaticRouter')
+
 const {ConnectToMongoDb}= require('./connections')
+
 const URL = require('./models/urls')
 
 ConnectToMongoDb('mongodb://localhost:27017/Url-Generate')
 .then(()=>console.log("MongoDb Connected!!!"));
 
-app.set("view engine","ejs")
-
-app.set("views",path.resolve("./views"))
+app.set("view engine", "ejs")
+app.set("views", path.resolve("./views"))
 
 app.use(express.json());
 
 app.use('/url',urlroute);
+app.use('/',staticrout);
 
 app.get('/test', async(req,res)=>{
     const allurls = await URL.find({})
