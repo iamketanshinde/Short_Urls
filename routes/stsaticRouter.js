@@ -12,7 +12,11 @@ router.get('/', async(req, res)=>{
 })
 
 router.get('/signup', (req, res)=>{
-      return res.render('User')
+      return res.render('SignUp')
+})
+
+router.get('/login', (req, res)=>{
+    return res.render('LogIn')
 })
 
 module.exports = router;
