@@ -2,12 +2,12 @@ const express = require('express');
 const app = express();
 const PORT = 4001;
 const path = require('path');
-const urlroute = require('./routes/url')
-const staticroute = require('./routes/stsaticRouter')
-
 const {ConnectToMongoDb}= require('./connections')
 
-const URL = require('./models/urls')
+const URL = require('./models/urls');
+const urlroute = require('./routes/url');
+const staticroute = require('./routes/stsaticRouter');
+const userRoute = require('./routes/user')
 
 ConnectToMongoDb('mongodb://localhost:27017/Url-Generate')
 .then(()=>console.log("MongoDb Connected!!!"));
@@ -21,6 +21,7 @@ app.use(express.urlencoded({extended:false}))
 
 app.use('/url',urlroute);
 app.use('/',staticroute);
+app.use('/user',userRoute)
 
 app.get('/test', async(req,res)=>{
     const allurls = await URL.find({})
