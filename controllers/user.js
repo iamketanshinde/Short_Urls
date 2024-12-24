@@ -8,7 +8,7 @@ async function HandleSignUpUser(req, res ){
         email,
         password,
     })
-      return res.render('User')
+      return res.render('User');
 }
 module.exports = {
     HandleSignUpUser,
