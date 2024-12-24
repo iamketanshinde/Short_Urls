@@ -3,7 +3,7 @@ const app = express();
 const PORT = 4001;
 const path = require('path');
 const urlroute = require('./routes/url')
-const staticrout = require('./routes/stsaticRouter')
+const staticroute = require('./routes/stsaticRouter')
 
 const {ConnectToMongoDb}= require('./connections')
 
@@ -16,9 +16,11 @@ app.set("view engine", "ejs")
 app.set("views", path.resolve("./views"))
 
 app.use(express.json());
+app.use(express.urlencoded({extended:false}))
+
 
 app.use('/url',urlroute);
-app.use('/',staticrout);
+app.use('/',staticroute);
 
 app.get('/test', async(req,res)=>{
     const allurls = await URL.find({})
