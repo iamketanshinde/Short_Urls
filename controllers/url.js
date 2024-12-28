@@ -10,14 +10,16 @@ async function handleNewShortUrl(req, res){
             redirectURL:body.url,
             visitHistory:[],
         });
+        console.log(shortID);
         return res.render('home',{
             id:shortID
         })
 };
 
-async function handleGetAnalytics(req,res){
+async function handleGetAnalytics(req, res){
+    // console.log('sdfsf');
     const shortId = req.params.shortId;
-    // console.log(shortId)
+    console.log(shortId)
     const result = await URL.findOne({shortId});
     // console.log(result);
     return res.json({ 
