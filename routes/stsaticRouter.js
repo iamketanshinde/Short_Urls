@@ -10,13 +10,8 @@ router.get('/', async(req, res)=>{
         urls:allurls,
     })
 })
-
 router.get('/signup', (req, res)=>{
-      return res.render('SignUp')
-})
-
-router.get('/login', (req, res)=>{
-    return res.render('Login')
+    return res.render('signup.ejs')
 })
 
 module.exports = router;
