@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const {v4:uuidv4} = require('uuid')
 const { use } = require('../routes/url');
 
 async function UserSignUpPage(req,res){
@@ -8,6 +9,7 @@ async function UserSignUpPage(req,res){
         email,
         password,
     });
+    const sessionId = uuidv4();
     return res.redirect('/');
 }
 
