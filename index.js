@@ -10,7 +10,7 @@ const URL = require('./models/urls');
 const urlroute = require('./routes/url');
 const staticroute = require('./routes/stsaticRouter');
 const userRouter = require('./routes/userRouter');
-const {restrictToLoggedInUser}= require('./middleware/auth');
+const {restrictToLoggedInUser,checkAuth}= require('./middleware/auth');
 
 
 ConnectToMongoDb('mongodb://localhost:27017/Url-Generate')
@@ -25,12 +25,13 @@ app.use(cookieParser());
 
 app.use('/url',restrictToLoggedInUser,urlroute);
 app.use('/user',userRouter);
-app.use('/',staticroute);
+app.use('/',checkAuth,staticroute);
 
 
 
 app.get('/test', async(req,res)=>{
-    const allurls = await URL.find({})
+    if(!req.user) return res.redirect('/login')
+    const allurls = await URL.find({createdBy:req.user._id})
     return res.render("home",{
         urls:allurls,
     });
