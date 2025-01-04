@@ -2,12 +2,16 @@ const express = require('express');
 const app = express();
 const PORT = 4001;
 const path = require('path');
-const {ConnectToMongoDb}= require('./connections')
+const {ConnectToMongoDb}= require('./connections');
+
+const cookieParser = require('cookie-parser');
 
 const URL = require('./models/urls');
 const urlroute = require('./routes/url');
 const staticroute = require('./routes/stsaticRouter');
-const userRouter = require('./routes/userRouter')
+const userRouter = require('./routes/userRouter');
+const {restrictToLoggedInUser}= require('./middleware/auth');
+
 
 ConnectToMongoDb('mongodb://localhost:27017/Url-Generate')
 .then(()=>console.log("MongoDb Connected!!!"));
@@ -17,11 +21,13 @@ app.set("views", path.resolve("./views"))
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
+app.use(cookieParser());
 
-
-app.use('/url',urlroute);
-app.use('/',staticroute);
+app.use('/url',restrictToLoggedInUser,urlroute);
 app.use('/user',userRouter);
+app.use('/',staticroute);
+
+
 
 app.get('/test', async(req,res)=>{
     const allurls = await URL.find({})

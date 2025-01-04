@@ -17,6 +17,7 @@ const urlSchema = new mongoose.Schema({
             },
         },
     ],
+    
 },{
     timestamps:true
 });
