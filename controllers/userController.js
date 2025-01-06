@@ -18,13 +18,11 @@ async function UserLogInPage(req,res){
         email,
         password,
     });
-    // console.log(user)
+    
     if(!user) return res.render('login', {error:"INVALID PASSWORD OR EMAIL"});
-
-        const sessionId = uuidv4();
-        setUser(sessionId, user);
-        res.cookie('uid', sessionId);
-        return res.render('home');
+    const token = setUser(user);
+    // res.cookie('uid', token);
+    return res.json({token});
 }
 
 
