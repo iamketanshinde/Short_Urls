@@ -10,7 +10,7 @@ const URL = require('./models/urls');
 const urlroute = require('./routes/url');
 const staticroute = require('./routes/stsaticRouter');
 const userRouter = require('./routes/userRouter');
-const {restrictToLoggedInUser,checkAuth}= require('./middleware/auth');
+const {checkForAuthentication,restrictTo}= require('./middleware/auth');
 
 
 ConnectToMongoDb('mongodb://localhost:27017/Url-Generate')
@@ -22,10 +22,11 @@ app.set("views", path.resolve("./views"))
 app.use(express.json());
 app.use(express.urlencoded({extended:false}))
 app.use(cookieParser());
+app.use(checkForAuthentication)
 
-app.use('/url',restrictToLoggedInUser,urlroute);
-app.use('/user',userRouter);
-app.use('/',checkAuth,staticroute);
+app.use('/url', restrictTo(['NORMAL']), urlroute);
+app.use('/user', userRouter);
+app.use('/', staticroute);
 
 
 
