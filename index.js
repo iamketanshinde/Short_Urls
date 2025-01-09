@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(cookieParser());
 app.use(checkForAuthentication)
 
-app.use('/url', restrictTo(['NORMAL']), urlroute);
+app.use('/url', restrictTo(['NORMAL','ADMIN']), urlroute);
 app.use('/user', userRouter);
 app.use('/', staticroute);
 

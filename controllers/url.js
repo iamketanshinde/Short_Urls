@@ -12,7 +12,7 @@ async function handleNewShortUrl(req, res){
         visitHistory:[],
         createdBy:req.user._id,
     });
-    console.log(shortID);
+    // console.log(shortID); 
     return res.render('home',{
         id:shortID
     })
