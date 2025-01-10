@@ -21,7 +21,7 @@ async function UserLogInPage(req,res){
     // console.log('requser',user);
     if(!user) return res.render('login', {error:"INVALID PASSWORD OR EMAIL"});
     const token = setUser(user);
-    console.log(token)
+    // console.log(token)
     res.cookie('token', token);
     return res.redirect("/");
 }
